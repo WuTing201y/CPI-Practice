@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+
+    for(int i =1; i<=n; i++){
+        int p, q, r;
+        scanf("%d %d %d", &p, &q, &r);
+
+        int flag = 0;
+
+        for(int u=1; u<=p; u++){
+            if(flag){
+                break;
+            }
+            else{
+                for(int v = u+1; v<=(p-u)/2; v++){
+                    if(flag){
+                        break;
+                    }
+                    else{
+                         for(int w = v+1; w<=(p-u-2*v)/3; w++){
+                            if((u + 2*v + 3*w == p) && (u*v*w == q) && (u*u*u + v*v + w == r)){
+                                flag = 1;
+                                printf("Case %d: u = %d, v = %d, w = %d\n", i, u,v,w);
+                                break;
+                            }
+                        }
+                    }
+            }
+
+
+            }
+        }
+    }
+    return 0;
+}
