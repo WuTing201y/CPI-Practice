@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+void func(int action, int *x, int *y);
+
+int main(){
+    int n, first = 0;
+    int count = 1;
+    while(scanf("%d", &n) != EOF){
+        if(first){
+            puts("");
+        }
+        first = 1;
+
+        printf("Log of Agent %d:\n", count);
+        count++;
+
+        int x = 0, y = 0;
+
+        for(int i = 1; i<=n; i++){
+            int action;
+            scanf("%d", &action);
+
+            func(action,&x,&y);
+        }
+    }
+
+  return 0;
+}
+
+void func(int action, int *x, int *y){
+
+    action %= 11;
+
+    if(action == 1){
+        (*x)++;
+    }else if(action == 2){
+        (*y)--;
+
+    }else if(action == 3){
+        (*x)--;
+
+    }else if(action == 4){
+        (*y)++;
+
+    }else if(action == 5){
+        printf("Normal attack at (%d,%d).\n", *x,*y);
+
+    }else if(action == 6){
+        printf("E-skill attack at (%d,%d).\n", *x,*y);
+
+    }else if(action == 7){
+        printf("Q-skill attack at (%d,%d).\n", *x,*y);
+
+    }else if(action == 8){
+        printf("R-skill attack at (%d,%d).\n", *x,*y);
+
+    }else if(action == 9){
+        printf("Cast spell 1 at (%d,%d).\n", *x,*y);
+
+    }else if(action == 10){
+        printf("Cast spell 2 at (%d,%d).\n", *x,*y);
+    }
+}
