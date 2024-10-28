@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
+void longDivision(int dividend, int divisor);
+
 int main() {
     int ox,oy,oz,px,py,pz,qx,qy,qz;
     while(scanf("%d %d %d %d %d %d %d %d %d" ,&ox,&oy,&oz,&px,&py,&pz,&qx,&qy,&qz) != EOF){
@@ -10,23 +12,40 @@ int main() {
         double qox = qx - ox;
         double qoy = qy - oy;
         double qoz = qz - oz;
-        
+
         double poa = sqrt(pox*pox + poy*poy + poz*poz);
         double qob = sqrt(qox*qox + qoy*qoy + qoz*qoz);
-        
+
         double ab = pox*qox + poy*qoy + poz*qoz;
-        
-        double result = ab / (poa*qob);
-        
-        printf("The cosine theta between vectors (%d, %d, %d) and (%d, %d, %d) is %.2f\n",(int)pox,(int)poy,(int)poz,(int)qox,(int)qoy,(int)qoz,result);        
-    }
+
+        // 將分子和分母都轉成整數
+        int scaled_ab = (int)(ab);          
+        int scaled_poqo = (int)(poa * qob);  
+
+
+        printf("The cosine theta between vectors (%d, %d, %d) and (%d, %d, %d) is ",(int)pox,(int)poy,(int)poz,(int)qox,(int)qoy,(int)qoz);
+        longDivision(scaled_ab, scaled_poqo); 
     return 0;
 }
 
-/*my result
--459 -51 -172 -26 -350 209 -33 -171 436
-The cosine theta between vectors (433, -299, 381) and (426, -120, 608) is 0.93
+// 長除法函數計算整數除法，並輸出小數點後兩位
+void longDivision(int dividend, int divisor) {
+    int integerPart = dividend / divisor; // 整數部分
+    int remainder = dividend % divisor;   // 初始餘數
 
+    printf("%d.", integerPart); // 
+
+    // 計算小數點後的兩位數
+    for (int i = 0; i < 2; i++) {
+        remainder *= 10;                  // 餘數放大10倍
+        int decimalDigit = remainder / divisor; 
+        printf("%d", decimalDigit);        
+        remainder = remainder % divisor;   // 更新餘數
+    }
+    printf("\n");
+}
+
+/*
 Sample Input
 -459 -51 -172 -26 -350 209 -33 -171 436
 -60 200 -383 -242 311 452 -9 493 431
