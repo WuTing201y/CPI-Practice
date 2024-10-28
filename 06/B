@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int ox,oy,oz,px,py,pz,qx,qy,qz;
+    while(scanf("%d %d %d %d %d %d %d %d %d" ,&ox,&oy,&oz,&px,&py,&pz,&qx,&qy,&qz) != EOF){
+        double pox = px - ox;
+        double poy = py - oy;
+        double poz = pz - oz;
+        double qox = qx - ox;
+        double qoy = qy - oy;
+        double qoz = qz - oz;
+        
+        double poa = sqrt(pox*pox + poy*poy + poz*poz);
+        double qob = sqrt(qox*qox + qoy*qoy + qoz*qoz);
+        
+        double ab = pox*qox + poy*qoy + poz*qoz;
+        
+        double result = ab / (poa*qob);
+        
+        printf("The cosine theta between vectors (%d, %d, %d) and (%d, %d, %d) is %.2f\n",(int)pox,(int)poy,(int)poz,(int)qox,(int)qoy,(int)qoz,result);        
+    }
+    return 0;
+}
+
+/*my result
+-459 -51 -172 -26 -350 209 -33 -171 436
+The cosine theta between vectors (433, -299, 381) and (426, -120, 608) is 0.93
+
+Sample Input
+-459 -51 -172 -26 -350 209 -33 -171 436
+-60 200 -383 -242 311 452 -9 493 431
+323 -69 -141 90 399 -347 -208 -130 -96
+198 199 376 -58 205 257 27 368 393
+142 -227 -482 385 175 288 -209 -197 156
+Sample Output
+The cosine theta between vectors (433, -299, 381) and (426, -120, 608) is 0.92
+The cosine theta between vectors (-182, 111, 835) and (51, 293, 814) is 0.94
+The cosine theta between vectors (-233, 468, -206) and (-531, -61, 45) is 0.28
+The cosine theta between vectors (-256, 6, -119) and (-171, 169, 17) is 0.62
+The cosine theta between vectors (243, 402, 770) and (-351, 30, 638) is 0.63
+*/
