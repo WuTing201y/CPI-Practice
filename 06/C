@@ -13,28 +13,28 @@ int main()
         int flag = 0;
 
         for(int u=1; u<=p; u++){
-            if(flag){
-                break;
-            }
-            else{
-                for(int v = u+1; v<=(p-u)/2; v++){
-                    if(flag){
+
+            for(int v = u+1; v<=(p-u)/2; v++){
+
+                for(int w = v+1; w<=(p-u-2*v)/3; w++){
+
+                    if((u + 2*v + 3*w == p) && (u*v*w == q) && (u*u*u + v*v + w == r)){
+                        flag = 1;
+                        printf("Case %d: u = %d, v = %d, w = %d\n", i, u,v,w);
                         break;
                     }
-                    else{
-                         for(int w = v+1; w<=(p-u-2*v)/3; w++){
-                            if((u + 2*v + 3*w == p) && (u*v*w == q) && (u*u*u + v*v + w == r)){
-                                flag = 1;
-                                printf("Case %d: u = %d, v = %d, w = %d\n", i, u,v,w);
-                                break;
-                            }
-                        }
-                    }
+                }
+                if(flag) break;
             }
-
-
-            }
+            if(flag) break;
         }
+
     }
     return 0;
 }
+
+/*
+2
+42 100 43
+30 28 24
+*/
