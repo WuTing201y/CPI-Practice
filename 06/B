@@ -1,3 +1,5 @@
+//有負數狀況要考慮
+
 #include <stdio.h>
 #include <math.h>
 
@@ -6,44 +8,58 @@ void longDivision(int dividend, int divisor);
 int main() {
     int ox,oy,oz,px,py,pz,qx,qy,qz;
     while(scanf("%d %d %d %d %d %d %d %d %d" ,&ox,&oy,&oz,&px,&py,&pz,&qx,&qy,&qz) != EOF){
-        double pox = px - ox;
-        double poy = py - oy;
-        double poz = pz - oz;
-        double qox = qx - ox;
-        double qoy = qy - oy;
-        double qoz = qz - oz;
+        int pox = px - ox;
+        int poy = py - oy;
+        int poz = pz - oz;
+        int qox = qx - ox;
+        int qoy = qy - oy;
+        int qoz = qz - oz;
 
-        double poa = sqrt(pox*pox + poy*poy + poz*poz);
-        double qob = sqrt(qox*qox + qoy*qoy + qoz*qoz);
+        int po = sqrt(pox*pox + poy*poy + poz*poz);
+        int qo = sqrt(qox*qox + qoy*qoy + qoz*qoz);
 
-        double ab = pox*qox + poy*qoy + poz*qoz;
+        int ab = pox*qox + poy*qoy + poz*qoz;
 
-        // 將分子和分母都轉成整數
-        int scaled_ab = (int)(ab);          
-        int scaled_poqo = (int)(poa * qob);  
+        
 
 
         printf("The cosine theta between vectors (%d, %d, %d) and (%d, %d, %d) is ",(int)pox,(int)poy,(int)poz,(int)qox,(int)qoy,(int)qoz);
-        longDivision(scaled_ab, scaled_poqo); 
+        longDivision(ab, po*qo);
+    }
     return 0;
 }
 
 // 長除法函數計算整數除法，並輸出小數點後兩位
 void longDivision(int dividend, int divisor) {
+    // 判斷結果的正負，使用XOR判斷" ^ "
+    int isNegative = (dividend < 0) ^ (divisor < 0);
+
+    // 將分子和分母都轉成正數
+    dividend = abs(dividend);
+    divisor = abs(divisor);
+
     int integerPart = dividend / divisor; // 整數部分
     int remainder = dividend % divisor;   // 初始餘數
 
-    printf("%d.", integerPart); // 
-
-    // 計算小數點後的兩位數
-    for (int i = 0; i < 2; i++) {
-        remainder *= 10;                  // 餘數放大10倍
-        int decimalDigit = remainder / divisor; 
-        printf("%d", decimalDigit);        
-        remainder = remainder % divisor;   // 更新餘數
+    // 根據符號輸出結果
+    if (isNegative) {
+        printf("-");
     }
-    printf("\n");
+    printf("%d.", integerPart);
+
+    // 計算小數點後的第一位
+    remainder *= 10;                     // 餘數放大10倍
+    int onePoint = remainder / divisor;
+    printf("%d", onePoint);              // 輸出小數第一位
+    remainder = remainder % divisor;     // 更新餘數
+
+    // 計算小數點後的第二位
+    remainder *= 10;
+    int twoPoint = remainder / divisor;
+    printf("%d\n", twoPoint);            // 輸出小數第二位
 }
+
+
 
 /*
 Sample Input
@@ -58,4 +74,8 @@ The cosine theta between vectors (-182, 111, 835) and (51, 293, 814) is 0.94
 The cosine theta between vectors (-233, 468, -206) and (-531, -61, 45) is 0.28
 The cosine theta between vectors (-256, 6, -119) and (-171, 169, 17) is 0.62
 The cosine theta between vectors (243, 402, 770) and (-351, 30, 638) is 0.63
+
+其他測資
+111 -440 435 238 329 462 -131 418 -218  -> 0.71
+58 -408 -4 463 -223 -348 118 -167 243   -> -0.08
 */
